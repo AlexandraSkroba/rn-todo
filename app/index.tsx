@@ -1,19 +1,35 @@
+import { COLORS } from "@/constants/ui";
+import useTodo from "@/hooks/useTodo";
 import Header from "@/layout/Header";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import TodoCreator from "@/layout/TodoCreator";
+import TodoList from "@/layout/TodoList";
+import { StatusBar, StyleSheet, View } from "react-native";
 
 export default function Index() {
+  const {
+    onAddTodo,
+    onDeleteTodo,
+    onCheckTodo,
+    onUpdateTodoTitle,
+    todos,
+    completedTodos,
+  } = useTodo();
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <View style={styles.container}>
       {/* меняет цвет в статусбаре */}
       <StatusBar barStyle={"dark-content"} />
-      <Header />
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Header
+        totalTodos={todos.length}
+        completedTodos={completedTodos.length}
+      />
+      <TodoCreator onAddTodo={onAddTodo} />
+      <TodoList
+        todos={todos}
+        onCheckTodo={onCheckTodo}
+        onDeleteTodo={onDeleteTodo}
+        onUpdateTodoTitle={onUpdateTodoTitle}
+      />
     </View>
   );
 }
@@ -21,5 +37,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
-})
+    backgroundColor: COLORS.PRIMARY_BACKGROUND,
+  },
+});

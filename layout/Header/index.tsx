@@ -1,5 +1,6 @@
 import StyledText from "@/components/StyledText";
 import { COLORS } from "@/constants/ui";
+import { getFullFormattedDate } from "@/helpers/date";
 import { StyleSheet, View } from "react-native";
 
 type HeaderProps = {
@@ -8,16 +9,24 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ totalTodos, completedTodos }) => {
+  const formattedDateNOW = getFullFormattedDate(new Date());
+
   return (
     <View style={styles.container}>
       <View style={styles.headerMainContent}>
         {/* Левая часть - число */}
-        <StyledText style={styles.dataContent}>23</StyledText>
+        <StyledText style={styles.dataContent}>
+          {formattedDateNOW.day}
+        </StyledText>
 
         {/* Правая часть - день и месяц */}
         <View style={styles.rightColumn}>
-          <StyledText style={styles.dayContent}>Monday</StyledText>
-          <StyledText style={styles.monthContent}>June</StyledText>
+          <StyledText style={styles.dayContent}>
+            {formattedDateNOW.weekday}
+          </StyledText>
+          <StyledText style={styles.monthContent}>
+            {formattedDateNOW.month}
+          </StyledText>
         </View>
       </View>
 
